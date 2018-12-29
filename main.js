@@ -40,6 +40,13 @@ class UI {
         `;
 
         lista.appendChild(row);
+
+    }
+
+    static limpliarCampos(){
+        document.querySelector('#titulo').value = '';
+        document.querySelector('#autor').value = '';
+        document.querySelector('#id').value = '';
     }
 }
 
@@ -65,4 +72,8 @@ document.querySelector('#libro-form').addEventListener('submit', (e) => {
 
     //Añadir el libro a la lista
     UI.agregarLibroLista(libro);
+
+    //Limpiar campos
+
+    UI.limpliarCampos();
 });
