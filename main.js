@@ -7,21 +7,49 @@ class Libro {
     }
 }
 
+//Clase: guardar informacion
+
+class guardar {
+    static getLibros() {
+
+        let libros;
+
+        if (localStorage.getItem('libros') === null) {
+            libros = [];
+        } else {
+            libros = JSON.parse(localStorage.getItem('libros'))
+        }
+        return libros;
+    }
+    static agregarLibros(libro) {
+
+        const libros = guardar.getLibros();
+
+        libros.push(libro);
+
+        localStorage.setItem('libros', JSON.stringify(libros))
+    }
+    static removerLibro(id) {
+
+        const libros = guardar.getLibros();
+
+        libros.forEach((libro, index) => {
+            if (libro.id === id) {
+                libros.splice(index, 1);
+            }
+        });
+
+        localStorage.setItem('libros', JSON.stringify(libros));
+    }
+
+
+}
+
 //Manejador de la clase
 class UI {
     static desplegarLibro() {
-        const LibrosGuardados = [{
-                titulo: 'Libro Uno',
-                autor: 'Thomas1',
-                id: '123'
-            },
-            {
-                titulo: 'Libro Dos',
-                autor: 'Thomas2',
-                id: '321'
-            }
-        ];
-        const libros = LibrosGuardados;
+
+        const libros = guardar.getLibros();
 
         libros.forEach((libro) => UI.agregarLibroLista(libro));
     }
@@ -104,8 +132,13 @@ document.querySelector('#libro-form').addEventListener('submit', (e) => {
         //Añadir el libro a la lista
         UI.agregarLibroLista(libro);
 
-        //Limpiar campos
+        //Añadir libro al localStorage
+        guardar.agregarLibros(libro)
 
+        //Mostar Alerta de libro agregado
+        UI.mostrarAlerta('Libro agregado correctamente', 'success')
+
+        //Limpiar campos
         UI.limpliarCampos();
     }
 });
@@ -114,4 +147,11 @@ document.querySelector('#libro-form').addEventListener('submit', (e) => {
 document.querySelector('#lista-libro').addEventListener('click', (e) => {
     UI.borrarCampo(e.target);
 
-}); 
+    //Mostar Alerta de libro removido
+    UI.mostrarAlerta('Libro removido correctamente', 'info')
+
+
+    //Remover libro del localStorage
+    guardar.removerLibro(e.target.parentElement.previousElementSibling.textContent);
+
+});
