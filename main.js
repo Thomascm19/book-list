@@ -49,7 +49,7 @@ class UI {
     }
 
     //Alerta de validacion 
-    static mostrarAlerta(mensaje, className){
+    static mostrarAlerta(mensaje, className) {
 
         const div = document.createElement('div');
         div.className = `alert alert-${className}`;
@@ -59,8 +59,8 @@ class UI {
         //Insertar el div antes de la etiqueta form
         container.insertBefore(div, form);
         //Desaparecer en 3 segundos
-        setTimeout(()=> document.querySelector('.alert').remove(),3000);
-        
+        setTimeout(() => document.querySelector('.alert').remove(), 3000);
+
     }
 
     //Metodo limpiar campos del form
@@ -92,8 +92,8 @@ document.querySelector('#libro-form').addEventListener('submit', (e) => {
     //Validacion del form
     if (titulo === '' || autor === '' || id === '') {
 
-       UI.mostrarAlerta('Complete los campos','danger');
-       
+        UI.mostrarAlerta('Complete los campos', 'danger');
+
     } else {
 
         //Instanciar libro
@@ -111,6 +111,7 @@ document.querySelector('#libro-form').addEventListener('submit', (e) => {
 });
 
 
-//document.querySelector('#lista-libro').addEventListener('click', (e) => {
- //   console.log(e.target);
-//});
+document.querySelector('#lista-libro').addEventListener('click', (e) => {
+    UI.borrarCampo(e.target);
+
+}); 
